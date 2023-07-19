@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /console
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: validate
+  main:
+    banner-mode: off
+  profiles:
+    active: local
