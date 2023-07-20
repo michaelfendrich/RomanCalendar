@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Calendar</title>
+    <style>
+        body{
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Courier, monospace;
+        }
+        header {
+            background-color: rgb(0, 0, 108);
+            color: white;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            font-size: large;
+        }
+        h1 {
+            padding-left: 200px;
+        }
+        form {
+            padding: 30px;
+            padding-left: 35%;
+            flex-direction: column;
+            display: flex;
+            width: 30%;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 25px;
+            width: 100%;
+            text-align: center;
+        }
+        form > .date {
+            height: 30px;
+            font-size: 18px;
+        }
+        .button-24 {
+        margin-top: 20px;
+        background: #FF4742;
+        border: 1px solid #FF4742;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 16px;
+        min-height: 40px;
+        outline: 0;
+        padding: 12px 14px;
+        text-align: center;
+        text-rendering: geometricprecision;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        }
+
+        .button-24:hover,
+        .button-24:active {
+        background-color: initial;
+        background-position: 0 0;
+        color: #FF4742;
+        }
+
+        .button-24:active {
+        opacity: .5;
+        }
+        .error {
+            color: red;
+            size: 10px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🗓️ Roman Calendar</h1>
+    </header>
+    <form th:method="post" th:action="@{/calendar}" th:object="${day}">
+        <input type="date" value="Date" class="date" min="1900-03-01" max="2100-02-28" th:field="*{date}">
+        <div class="error" th:errors="*{date}"></div>
+        <input type="submit" value="Find" class="button-24">
+    </form>
+    <div class="result" th:if="${day.inRoman}" th:text="${day.inRoman}"></div>
+</body>
+</html>

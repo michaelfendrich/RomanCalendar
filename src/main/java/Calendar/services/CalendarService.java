@@ -1,10 +1,8 @@
 package Calendar.services;
 
-import Calendar.entity.DayEntity;
-
-import java.util.List;
+import Calendar.controllers.entity.DayDTO;
 
 public interface CalendarService {
 
-    List<DayEntity> saveAllDays(List<DayEntity> days);
+    void convertToRoman(DayDTO dayDTO);
 }
