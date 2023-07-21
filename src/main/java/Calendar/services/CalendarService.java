@@ -1,6 +1,6 @@
 package Calendar.services;
 
-import Calendar.controllers.entity.DayDTO;
+import Calendar.entity.DayDTO;
 
 public interface CalendarService {
 

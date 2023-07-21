@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class DateConvertor {
 
-    private static final int AUC = 753;
+    private static final int AB_URBE_CONDITA = 753;
     private static final int DAYS_TO_JULIAN = 13;
 
     public String toRomanCalendar(LocalDate date) {
@@ -21,6 +21,7 @@ public class DateConvertor {
         return calculate(date, 7, 15);
     }
 
+    //to Julian Calendar, minus 13 days, valid from 1900 to 2100
     private LocalDate toJulian(LocalDate date) {
         return date.minusDays(DAYS_TO_JULIAN);
     }
@@ -33,17 +34,17 @@ public class DateConvertor {
                 "Maias", "Iunias", "Quintilis", "Augustas", "Septembrīs", "Octobris", "Novembrīs",
                 "Decembris");
         int day = date.getDayOfMonth();
-        String result = "";
+        String result;
         if (day == 1) {
             result = "Kalendis " + monthsInAblativ.get(date.getMonthValue() - 1);
         } else if (day < nony - 1) {
-            result = "ante diem " + toRoman(nony - day + 1) + " Nonas " + monthInAkuzativ.get(date.getMonthValue() - 1);
+            result = "ante diem " + toRomanNumbers(nony - day + 1) + " Nonas " + monthInAkuzativ.get(date.getMonthValue() - 1);
         } else if (day == nony - 1) {
             result = "pridie Nonas " + monthInAkuzativ.get(date.getMonthValue() - 1);
         } else if (day == nony) {
             result = "Nonis " + monthsInAblativ.get(date.getMonthValue() - 1);
         } else if (day < idy - 1) {
-            result = "ante diem " + toRoman(idy - day + 1) + " Idus " + monthInAkuzativ.get(date.getMonthValue() - 1);
+            result = "ante diem " + toRomanNumbers(idy - day + 1) + " Idus " + monthInAkuzativ.get(date.getMonthValue() - 1);
         } else if (day == idy - 1) {
             result = "pridie Idus " + monthInAkuzativ.get(date.getMonthValue() - 1);
         } else if (day == idy) {
@@ -51,29 +52,26 @@ public class DateConvertor {
         } else {
             int month = date.getMonthValue();
             if (date.getMonthValue() == 12) {month = 0;}
-            result = calculateKalendas(date) + monthInAkuzativ.get(month);
+            result = calculateToKalendas(date) + monthInAkuzativ.get(month);
         }
         return result + " " + yearAUC(date.getYear());
     }
 
-    private String calculateKalendas(LocalDate date) {
-        String result = "";
+    private String calculateToKalendas(LocalDate date) {
         Month month = date.getMonth();
         int day = date.getDayOfMonth();
         int dayOfMonth = month.length(date.isLeapYear());
         if (day < dayOfMonth) {
-            result = "ante diem " + toRoman(dayOfMonth - day + 2) + " Kalendas ";
-        } else {
-            result = "pridie Kalendas ";
+            return "ante diem " + toRomanNumbers(dayOfMonth - day + 2) + " Kalendas ";
         }
-        return result;
+        return "pridie Kalendas ";
     }
 
     private String yearAUC(int year) {
-        return toRoman(year + AUC) + " AUC";
+        return toRomanNumbers(year + AB_URBE_CONDITA) + " AUC";
     }
 
-    private String toRoman(int num) {
+    private String toRomanNumbers(int num) {
         int[] values = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
         String[] romanLetters = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
         StringBuilder roman = new StringBuilder();

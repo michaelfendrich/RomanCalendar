@@ -1,6 +1,6 @@
 package Calendar.services.impl;
 
-import Calendar.controllers.entity.DayDTO;
+import Calendar.entity.DayDTO;
 import Calendar.services.CalendarService;
 import Calendar.services.DateConvertor;
 import org.springframework.beans.factory.annotation.Autowired;

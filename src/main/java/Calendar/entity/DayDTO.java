@@ -1,9 +1,7 @@
-package Calendar.controllers.entity;
+package Calendar.entity;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
-
 
 import java.time.LocalDate;
 

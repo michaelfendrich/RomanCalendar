@@ -1,6 +1,6 @@
 package Calendar.controllers;
 
-import Calendar.controllers.entity.DayDTO;
+import Calendar.entity.DayDTO;
 import Calendar.services.CalendarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
