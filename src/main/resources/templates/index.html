@@ -87,7 +87,7 @@
         <h1>🗓️ Roman Calendar</h1>
     </header>
     <form th:method="post" th:action="@{/calendar}" th:object="${day}">
-        <input type="date" value="Date" class="date" min="1900-03-01" max="2100-02-28" th:field="*{date}">
+        <input type="date" value="Date" class="date" min="1582-10-15" max="2300-3-15" th:field="*{date}">
         <div class="error" th:errors="*{date}"></div>
         <input type="submit" value="Find" class="button-24">
     </form>

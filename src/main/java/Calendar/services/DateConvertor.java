@@ -10,7 +10,6 @@ import java.util.List;
 public class DateConvertor {
 
     private static final int AB_URBE_CONDITA = 753;
-    private static final int DAYS_TO_JULIAN = 13;
 
     public String toRomanCalendar(LocalDate date) {
         date = toJulian(date);
@@ -23,7 +22,19 @@ public class DateConvertor {
 
     //to Julian Calendar, minus 13 days, valid from 1900 to 2100
     private LocalDate toJulian(LocalDate date) {
-        return date.minusDays(DAYS_TO_JULIAN);
+        int daysToJulian = 13;
+        if (date.isBefore(LocalDate.of(1700, 3, 11))) {
+            daysToJulian = 10;
+        } else if (date.isBefore(LocalDate.of(1800, 3, 12))) {
+            daysToJulian = 11;
+        } else if (date.isBefore(LocalDate.of(1900, 3, 13))) {
+            daysToJulian = 12;
+        } else if (date.isAfter(LocalDate.of(2200, 3, 14))) {
+            daysToJulian = 15;
+        } else if (date.isAfter(LocalDate.of(2100, 3, 13))) {
+            daysToJulian = 14;
+        }
+        return date.minusDays(daysToJulian);
     }
 
     private String calculate(LocalDate date, int nony, int idy) {
@@ -51,7 +62,7 @@ public class DateConvertor {
             result = "Idibus " + monthsInAblativ.get(date.getMonthValue() - 1);
         } else {
             int month = date.getMonthValue();
-            if (date.getMonthValue() == 12) {month = 0;}
+            if (month == 12) {month = 0;}
             result = calculateToKalendas(date) + monthInAkuzativ.get(month);
         }
         return result + " " + yearAUC(date.getYear());
@@ -60,7 +71,12 @@ public class DateConvertor {
     private String calculateToKalendas(LocalDate date) {
         Month month = date.getMonth();
         int day = date.getDayOfMonth();
-        int dayOfMonth = month.length(date.isLeapYear());
+        boolean isLeapYear = date.isLeapYear();
+        //if the Year is divisible by 4 is always leap in Julian calendar
+        if (date.getYear() % 4 == 0) {
+            isLeapYear = true;
+        }
+        int dayOfMonth = month.length(isLeapYear);
         if (day < dayOfMonth) {
             return "ante diem " + toRomanNumbers(dayOfMonth - day + 2) + " Kalendas ";
         }

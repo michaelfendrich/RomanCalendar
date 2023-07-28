@@ -39,7 +39,12 @@ class DateConvertorTest {
                 Arguments.of(LocalDate.of(2024,3,12), "ante diem III Kalendas Martias MMDCCLXXVII AUC"),
                 Arguments.of(LocalDate.of(2023,3,12), "ante diem III Kalendas Martias MMDCCLXXVI AUC"),
                 Arguments.of(LocalDate.of(2023,2,27), "ante diem XVI Kalendas Martias MMDCCLXXVI AUC"),
-                Arguments.of(LocalDate.of(2024,2,27), "ante diem XVII Kalendas Martias MMDCCLXXVII AUC")
+                Arguments.of(LocalDate.of(2100,2,27), "ante diem XVII Kalendas Martias MMDCCCLIII AUC"),
+                Arguments.of(LocalDate.of(2024,2,27), "ante diem XVII Kalendas Martias MMDCCLXXVII AUC"),
+                Arguments.of(LocalDate.of(1899,1,20), "ante diem VI Idus Ianuarias MMDCLII AUC"),
+                Arguments.of(LocalDate.of(1799,1,20), "ante diem V Idus Ianuarias MMDLII AUC"),
+                Arguments.of(LocalDate.of(1699,1,20), "ante diem IV Idus Ianuarias MMCDLII AUC"),
+                Arguments.of(LocalDate.of(2101,1,20), "ante diem VIII Idus Ianuarias MMDCCCLIV AUC")
         );
     }
 
