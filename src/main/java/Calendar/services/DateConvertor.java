@@ -73,8 +73,11 @@ public class DateConvertor {
         int day = date.getDayOfMonth();
         boolean isLeapYear = date.isLeapYear();
         //if the Year is divisible by 4 is always leap in Julian calendar
-        if (date.getYear() % 4 == 0) {
+        if (date.getYear() % 100 == 0 && date.getYear() % 400 != 0) {
             isLeapYear = true;
+            if ((date.getMonthValue() == 2) && (day == 28)) {
+                day = 29;
+            }
         }
         int dayOfMonth = month.length(isLeapYear);
         if (day < dayOfMonth) {
