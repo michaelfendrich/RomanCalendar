@@ -44,7 +44,9 @@ class DateConvertorTest {
                 Arguments.of(LocalDate.of(1899,1,20), "ante diem VI Idus Ianuarias MMDCLII AUC"),
                 Arguments.of(LocalDate.of(1799,1,20), "ante diem V Idus Ianuarias MMDLII AUC"),
                 Arguments.of(LocalDate.of(1699,1,20), "ante diem IV Idus Ianuarias MMCDLII AUC"),
-                Arguments.of(LocalDate.of(2101,1,20), "ante diem VIII Idus Ianuarias MMDCCCLIV AUC")
+                Arguments.of(LocalDate.of(2101,1,20), "ante diem VIII Idus Ianuarias MMDCCCLIV AUC"),
+                Arguments.of(LocalDate.of(1900,3,13), "pridie Kalendas Martias MMDCLIII AUC"),
+                Arguments.of(LocalDate.of(1900,3,12), "ante diem III Kalendas Martias MMDCLIII AUC")
         );
     }
 

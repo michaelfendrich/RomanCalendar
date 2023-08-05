@@ -12,12 +12,18 @@ public class DateConvertor {
     private static final int AB_URBE_CONDITA = 753;
 
     public String toRomanCalendar(LocalDate date) {
-        date = toJulian(date);
+        LocalDate julianDate = toJulian(date);
         List<Integer> earlierMonths = List.of(1, 2, 4, 6, 8, 9, 11, 12);
-        if (earlierMonths.contains(date.getMonthValue())) {
-            return calculate(date, 5, 13);
+        List<LocalDate> leapDaysOnlyInJulian = List.of(
+                LocalDate.of(1700, 3, 11),
+                LocalDate.of(1800, 3, 12),
+                LocalDate.of(1900, 3, 13),
+                LocalDate.of(2100, 3, 13),
+                LocalDate.of(2200, 3, 14));
+        if (earlierMonths.contains(julianDate.getMonthValue())) {
+            return calculate(julianDate, 5, 13, leapDaysOnlyInJulian.contains(date));
         }
-        return calculate(date, 7, 15);
+        return calculate(julianDate, 7, 15, leapDaysOnlyInJulian.contains(date));
     }
 
     //to Julian Calendar, minus 13 days, valid from 1900 to 2100
@@ -37,7 +43,7 @@ public class DateConvertor {
         return date.minusDays(daysToJulian);
     }
 
-    private String calculate(LocalDate date, int nony, int idy) {
+    private String calculate(LocalDate date, int nony, int idy, boolean leapDaysOnlyInJulian) {
         List<String> monthsInAblativ = List.of("Ianuariis",
                 "Februariis", "Martiis", "Aprilibus", "Maiis", "Iuniae", "Quintilis", "Augustae",
                 "Septembrīs", "Octobres", "Novembrīs", "Decembris");
@@ -63,19 +69,19 @@ public class DateConvertor {
         } else {
             int month = date.getMonthValue();
             if (month == 12) {month = 0;}
-            result = calculateToKalendas(date) + monthInAkuzativ.get(month);
+            result = calculateToKalendas(date, leapDaysOnlyInJulian) + monthInAkuzativ.get(month);
         }
         return result + " " + yearAUC(date.getYear());
     }
 
-    private String calculateToKalendas(LocalDate date) {
+    private String calculateToKalendas(LocalDate date, boolean leapDaysOnlyInJulian) {
         Month month = date.getMonth();
         int day = date.getDayOfMonth();
         boolean isLeapYear = date.isLeapYear();
         //if the Year is divisible by 4 is always leap in Julian calendar
         if (date.getYear() % 100 == 0 && date.getYear() % 400 != 0) {
             isLeapYear = true;
-            if ((date.getMonthValue() == 2) && (day == 28)) {
+            if (leapDaysOnlyInJulian) {
                 day = 29;
             }
         }
